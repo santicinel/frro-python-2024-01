@@ -19,9 +19,11 @@ def combinar_basico(nombres: List[str], precios: List[float]) -> Tuple[Any]:
 
     Restricción: Resolver utilizando un bucle for.
     """
-    pass # Completar
-
-
+    nueva=()
+    for tipo in  range(len(nombres)):
+        nueva+=((nombres[tipo],precios[tipo]),)
+    return nueva
+    
 # NO MODIFICAR - INICIO
 respuesta = (
     ("ventana", 100.48),
@@ -36,6 +38,11 @@ assert combinar_basico(nombre_articulos, precio_articulos) == respuesta
 ###############################################################################
 
 
+from typing import Any, List, Tuple
+
+nombre_articulos = ["ventana", "lámpara", "shampoo"]
+precio_articulos = [100.48, 16.42, 5.20]
+
 id_articulos = [6852, 1459, 3578]
 
 
@@ -43,7 +50,10 @@ def combinar_enumerate(nombres: List[str], precios: List[float], ids: List[int])
     """Re-Escribir utilizando enumerate y agregando un nuevo componente.
     Referencia: https://docs.python.org/3/library/functions.html#enumerate
     """
-    pass # Completar
+    nueva=()
+    for indice,tipo in  enumerate(nombres):
+        nueva+=((tipo,precios[indice],ids[indice]),)
+    return nueva
 
 
 # NO MODIFICAR - INICIO
@@ -56,8 +66,13 @@ respuesta = (
 assert combinar_enumerate(nombre_articulos, precio_articulos, id_articulos) == respuesta
 # NO MODIFICAR - FIN
 
-
 ###############################################################################
+
+from typing import Any, List, Tuple
+
+nombre_articulos = ["ventana", "lámpara", "shampoo"]
+precio_articulos = [100.48, 16.42, 5.20]
+
 
 
 id_articulos = [6852, 1459, 3578]
@@ -67,9 +82,8 @@ def combinar_zip(nombres: List[str], precios: List[float], ids: List[int]) -> Tu
     """Re-Escribir utilizando zip.
     Referencia: https://docs.python.org/3/library/functions.html#zip
     """
-    pass # Completar
-
-
+    nueva=tuple(zip(nombres,precios,ids))
+    return nueva
 # NO MODIFICAR - INICIO
 respuesta = (
     ("ventana", 100.48, 6852),
@@ -82,8 +96,19 @@ assert combinar_zip(nombre_articulos, precio_articulos, id_articulos) == respues
 
 
 ###############################################################################
+"""Tuple, Enumerate, Zip, Args.
 
 
+Contexto: Se tiene un programa que lee diferentes listas de una tabla en una
+base de datos y se quieren combinar estas listas para que luego puedan crearse
+los objetos de la capa de negocio.
+"""
+
+
+from typing import Any, List, Tuple
+
+nombre_articulos = ["ventana", "lámpara", "shampoo"]
+precio_articulos = [100.48, 16.42, 5.20]
 id_articulos = [6852, 1459, 3578]
 categoria_articulos = ["hogar", "libreria", "perfumeria"]
 importado_articulos = [True, False, True]
@@ -93,8 +118,9 @@ def combinar_zip_args(*args) -> Tuple[Any]:
     """Re-Escribir utilizando zip y una cantidad arbitraria de componentes.
     Referencia: https://docs.python.org/3/tutorial/controlflow.html#unpacking-argument-lists
     """
-    pass # Completar
+    nueva=tuple(zip(*args))
 
+    return nueva
 
 # NO MODIFICAR - INICIO
 respuesta = (
