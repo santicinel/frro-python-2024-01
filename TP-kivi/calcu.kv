@@ -1,0 +1,109 @@
+#:kivy 2.3.0
+
+GridLayout:
+    rows:2
+    cols:1
+    padding:5
+    spacing:5
+
+    TextInput:
+        id: screen
+        multiline: False
+        readonly: True
+        font_size: 30
+  
+
+    GridLayout:
+        rows:4
+        cols:5
+        padding:5
+        spacing:5
+
+        Button:
+            id: 1
+            text:"1"
+            on_press:screen.text+=self.text
+        Button:
+            id: 2
+            text:"2"
+            on_press:screen.text+=self.text
+        Button:
+            id: 3
+            text:"3"
+            on_press:screen.text+=self.text
+        Button:
+            id: 4
+            text:"4"
+            on_press:screen.text+=self.text
+        Button:
+            id: 5
+            text:"5"
+            on_press:screen.text+=self.text
+        Button:
+            id: 6
+            text:"6"
+            on_press:screen.text+=self.text
+        Button:
+            id: 7
+            text:"7"
+            on_press:screen.text+=self.text
+        Button:
+            id: 8
+            text:"8"
+            on_press:screen.text+=self.text
+        Button:
+            id: 9
+            text:"9"
+            on_press:screen.text+=self.text
+        Button:
+            id: 0
+            text:"0"
+            on_press:screen.text+=self.text
+        Button:
+            id: *
+            text:"*"
+            on_press:screen.text+=self.text
+        Button:
+            id: /
+            text:"/"
+            on_press:screen.text+=self.text
+        Button:
+            id: +
+            text:"+"
+            on_press:screen.text+=self.text
+        Button:
+            id: -
+            text:"-"
+            on_press:screen.text+=self.text
+        Button:
+            id: .
+            text:"."
+            on_press:screen.text+=self.text
+        Button:
+            id: DeleteAll
+            text:"DeleteAll"
+            on_press:screen.text=''
+        Button:
+            id: buttonRight
+            text:"<-"
+            on_press:screen.cursor = (screen.cursor[0], screen.cursor[1]+1)
+        Button:
+            id: buttonLeft
+            text:"->"
+            on_press:screen.cursor = (screen.cursor[0], screen.cursor[1]-1)
+        Button:
+            id: buttonDelete
+            text:"Delete"
+            on_press:screen.text= screen.text[:-1]
+        Button:
+            id: =
+            text:"="
+            on_press:screen.text=str(eval(screen.text))
+
+
+
+
+    #Button:
+     #   text:'Ejecutar Operación'
+      #  on_press:screen.text=str(eval(screen.text))
+    
