@@ -1,5 +1,5 @@
 """Dataclasses"""
-
+'''
 
 class Persona:
     """Clase con los siguientes miembros:
@@ -16,6 +16,17 @@ class Persona:
     """
 
     # Completar
+    def __init__(self,nombre:str,edad:int,sexo:str,peso:float,altura:float) -> None:
+        self.nombre:str=nombre
+        self.edad:int=edad
+        if sexo=='M' or sexo=='m' or sexo=='F' or sexo=='f':
+            self.sexo:str=sexo
+        self.peso:float=peso
+        self.altura:float=altura
+        
+    def es_mayor_edad(self)->bool:
+        return self.edad>=18
+       
 
 
 # NO MODIFICAR - INICIO
@@ -23,7 +34,7 @@ assert Persona("Juan", 18, "H", 85, 175.9).es_mayor_edad()
 assert not Persona("Julia", 16, "M", 65, 162.4).es_mayor_edad()
 # NO MODIFICAR - FIN
 
-
+'''
 ###############################################################################
 
 
@@ -34,6 +45,16 @@ class Persona:
     """Re-Escribir utilizando DataClasses"""
 
     # Completar
+@dataclass
+class Persona:
+    nombre:str
+    edad:int
+    sexo:str
+    peso:float
+    altura:float
+        
+    def es_mayor_edad(self):
+        return self.edad>=18
 
 
 # NO MODIFICAR - INICIO

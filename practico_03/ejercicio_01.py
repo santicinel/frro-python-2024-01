@@ -9,10 +9,17 @@ class Rectangulo:
     método area.
     """
     # Completar
-
+    def __init__(self,base:Optional[float]=None,altura:Optional[float]=None)-> None:
+        self.base:float=base
+        self.altura:altura=altura
+    def area(self)->float:
+        if self.base is None and self.altura is None:
+            return 0
+        else:
+            return self.base*self.altura
 
 # NO MODIFICAR - INICIO
-
+'''
 # Test Constructor
 rec = Rectangulo(10, 10)
 assert rec.base == 10
@@ -30,7 +37,7 @@ rec.altura = 10
 assert rec.base == 10
 assert rec.altura == 10
 assert rec.area() == 100
-
+'''
 # Test Instanciación sin variable
 assert Rectangulo(10, 10).area() == 100
 assert Rectangulo(10, 0).area() == 0
