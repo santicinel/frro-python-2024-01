@@ -1,0 +1,2 @@
+cur.execute("CREATE TABLE IF NOT EXISTS persona(IdPersona INTEGER PRIMARY KEY AUTOINCREMENT, Nombre VARCHAR(50), FechaNacimiento DATE, DNI INTEGER, Altura FLOAT)")
+    

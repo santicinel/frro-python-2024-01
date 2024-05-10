@@ -1,10 +1,11 @@
 """Base de datos SQL - Listar"""
 
 import datetime
-
-from practico_04.ejercicio_02 import agregar_persona
-from practico_04.ejercicio_06 import reset_tabla
-from practico_04.ejercicio_07 import agregar_peso
+import sqlite3
+from ejercicio_02 import agregar_persona
+from ejercicio_04 import buscar_persona
+from ejercicio_06 import reset_tabla
+from ejercicio_07 import agregar_peso
 
 
 def listar_pesos(id_persona):
@@ -30,7 +31,22 @@ def listar_pesos(id_persona):
 
     - False en caso de no cumplir con alguna validacion.
     """
-    return []
+    db=sqlite3.connect("basedatos.db")
+    cur=db.cursor()
+    
+    persona=buscar_persona(id_persona)
+    if persona:
+        cur.execute("SELECT fecha, peso FROM personaPeso WHERE IdPersona=? ORDER BY fecha",(id_persona,))
+        resultado=cur.fetchall()
+        lista_pesos=[(str(row[0]),row[1]) for row in resultado]
+        db.commit()
+        db.close()
+        return lista_pesos
+    else:
+        db.close() 
+        return False
+    
+    
 
 
 # NO MODIFICAR - INICIO
