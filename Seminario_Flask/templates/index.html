@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To Do App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style/style.css') }}">
+
+</head>
+<body> 
+    <div class="container">
+        <h1>To Do List App</h1>
+        <ul>
+            {% for todo in todos %}
+                <li>
+                    <input type="checkbox" name="done" {% if todo['done'] %} checked {% endif %} disabled onchange="this.form.submit()">
+                    <span {% if todo['done'] %} style="text-decoration:line-through" {% endif %}>{{ todo['task'] }}</span>
+                    <a href="{{ url_for('check', index=loop.index0) }}">Check</a> 
+                    <a href="{{ url_for('delete', index=loop.index0) }}">Delete</a> 
+                    <a href="{{ url_for('edit', index=loop.index0) }}">Edit</a> 
+                </li>
+            {% endfor %}
+        </ul>
+        <form action="{{ url_for('add') }}" method="post">
+            <input type="text" name="todo" required>
+            <button type="submit">Add</button>
+        </form>
+    </div>
+</body>
+</html>

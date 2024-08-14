@@ -3,7 +3,7 @@ Funcionalidades Clave:
 
     Ingreso de Datos Iniciales:
         El usuario ingresa sus gastos e ingresos totales durante el primer mes.
-        La aplicación utiliza el índice de inflación proporcionado por INDEC para predecir los gastos futuros.
+        La aplicación utiliza el índice de inflación proporcionado por INDEC para predecir los gastos futuros. 
 
     Gestión Continua:
         Permite al usuario agregar, modificar y eliminar ingresos en cualquier momento.
