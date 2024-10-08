@@ -1,11 +1,9 @@
-
-
 from enum import auto
 from sqlalchemy import Column, Double, ForeignKey, Integer, String, Date, create_engine
-from sqlalchemy.orm import Relationship, relationship, sessionmaker, declarative_base
+from sqlalchemy.orm import  relationship, sessionmaker, declarative_base
 
 
-DATABASE_URL = "mysql+pymysql://root:root@localhost:3306/finanzio_bd"
+DATABASE_URL = "mysql+pymysql://root:2112@localhost:3306/finanzio_bd"
 engine = create_engine(DATABASE_URL)
 
 Base = declarative_base()
