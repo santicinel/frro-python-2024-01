@@ -1,0 +1,22 @@
+{% extends "base.html"%} {% block title %}Login - Finanzio{% endblock %} {%
+block content %}
+<div
+  class="d-flex flex-column justify-content-center align-items-center vh-100"
+>
+  <form class="card p-4 shadow-lg" method="POST" action="/loginuser">
+    <div class="mb-3">
+      <label for="exampleInputEmail1" class="form-label">Usuario</label>
+      <input type="text" class="form-control" name="username" />
+    </div>
+    <div class="mb-3">
+      <label for="exampleInputPassword1" class="form-label">Contraseña</label>
+      <input type="password" class="form-control" name="contraseña" />
+    </div>
+    <div class="mb-3 form-check">
+      <input type="checkbox" class="form-check-input" id="exampleCheck1" />
+      <label class="form-check-label" for="exampleCheck1">Guardar</label>
+    </div>
+    <button t class="btn btn-success">Iniciar Sesión</button>
+  </form>
+</div>
+{% endblock %}

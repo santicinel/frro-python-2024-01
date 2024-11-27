@@ -1,0 +1,26 @@
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f9;
+  height: 100vh;
+  margin: 0;
+}
+
+h1 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.header-custom {
+  background-color: #46ec5f;
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.3);
+  height: 4rem;
+}
+
+.offcanvas-item {
+  padding: 10px 15px;
+  border: 1px solid #ddd;
+  /* Borde gris claro */
+  border-radius: 5px;
+  margin: 5px 0;
+  /* Espaciado entre los items */
+}

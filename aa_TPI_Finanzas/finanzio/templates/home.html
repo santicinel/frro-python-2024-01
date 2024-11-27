@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block title %}Home - Finanzio{% endblock %} {%
+block content %}
+<div class="d-flex justify-content-between align-items-center mt-3 mb-4">
+  <h1 class="m-0">Mis ingresos</h1>
+  <div>
+    <button
+      class="btn btn-success me-2"
+      data-bs-toggle="modal"
+      data-bs-target="#modalIngresos"
+    >
+      Agregar Ingresos
+    </button>
+    <button
+      class="btn btn-danger"
+      data-bs-toggle="modal"
+      data-bs-target="#modalGastos"
+    >
+      Agregar Gastos
+    </button>
+  </div>
+</div>
+
+<!-- Contenido principal -->
+<div class="d-flex justify-content-between align-items-center mt-4">
+  <h3>Ultimo mes:</h3>
+</div>
+<!-- Puedes agregar aquí gráficos, reportes, etc. -->
+
+{% include "modals.html" %} {% endblock %}

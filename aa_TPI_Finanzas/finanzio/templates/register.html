@@ -1,0 +1,72 @@
+{% extends "base.html"%} {% block title %}Register - Finanzio{% endblock %} {%
+block content %}
+
+<div class="container mt-5">
+        <!-- Mensajes flash -->
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="alert alert-warning">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+<div class="d-flex flex-column align-items-center align-bottom mt-5">
+  <form method="POST" action="/newuser" class="card w-50 p-4 shadow-lg">
+    <div class="mb-2">
+      <label for="exampleInputEmail1" class="form-label">Usuario</label>
+      <input
+        type="text" name="username"
+        class="form-control"
+      />
+    <div class="mb-2">
+      <label for="exampleInputPassword1" class="form-label">Nombre</label>
+      <input type="text" class="form-control" name="nombre" />
+    </div>
+    <div class="mb-2">
+      <label for="exampleInputEmail1" class="form-label">Apellido</label>
+      <input
+        type="text"
+        class="form-control" name="apellido"
+      />
+    </div>
+    <div class="mb-2">
+      <label for="exampleInputEmail1" class="form-label">DNI</label>
+      <input
+        type="text"
+        class="form-control" name="dni"
+      />
+      <div id="emailHelp" class="form-text"></div>
+    </div>
+    <div class="mb-2">
+      <label  class="form-label">Email</label>
+      <input
+        type="email"
+        class="form-control"
+        name="email"
+      />
+    </div>
+    <div class="mb-2">
+      <label  class="form-label">Contraseña</label>
+      <input
+        type="password"
+        class="form-control"
+        name="contraseña"
+      />
+    </div>
+    <div class="mb-2">
+      <label  class="form-label"
+        >Fecha de Nacimiento</label
+      >
+      <input
+        type="text"
+        class="form-control"
+       name="fecha_nacimiento"
+      />
+      <div id="emailHelp" class="form-text"></div>
+    </div>
+    <button  class="btn btn-success">Iniciar Sesión</button>
+  </form>
+</div>
+{% endblock %}
