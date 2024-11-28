@@ -18,7 +18,7 @@
         ></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form method="POST" action="/ingreso">
           <div class="mb-3">
             <label for="ingresoMonto" class="form-label">Monto</label>
             <input
@@ -26,15 +26,26 @@
               class="form-control"
               id="ingresoMonto"
               placeholder="Ingrese el monto"
+              name="monto"
+            />
+            <label for="ingresoDescripcion" class="form-label mt-2"
+              >Descripcion</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="ingresoDescripcion"
+              placeholder="Descripcion"
+              name="descripcion"
             />
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          </div>
+         <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Cerrar
-        </button>
-        <button type="button" class="btn btn-success">Guardar</button>
+          </button>
+          <button type="submit" class="btn btn-success">Guardar</button>
+      </form>
       </div>
     </div>
   </div>
