@@ -1,7 +1,7 @@
-from sqlalchemy import Column, Double, ForeignKey, Integer, String, Date, create_engine
+from sqlalchemy import Column, Double, ForeignKey, Integer, String, Date, column, create_engine
 from sqlalchemy.orm import relationship, sessionmaker, declarative_base
 
-DATABASE_URL = "mysql+pymysql://root:admin@localhost:3306/finanzio_db"
+DATABASE_URL = "mysql+pymysql://root:root@localhost:3306/finanzio_db"
 engine = create_engine(DATABASE_URL)
 
 Base = declarative_base()
@@ -58,7 +58,7 @@ class Ingreso(Base):
     descripcion = Column(String(250), nullable=False)
 
     # Un ingreso pertenece a un usuario
-    user_name = Column(String(250), ForeignKey('usuarios.user_name'))
+    user_name = Column(String(250), ForeignKey('usuarios.user_name'), nullable=False)
     usuario = relationship("Usuario", back_populates="ingresos")
 
 
@@ -73,7 +73,7 @@ class Categoria(Base):
     gastos = relationship('Gasto', back_populates='categoria')
 
 
-"""class Prediccion(Base):
+class Prediccion(Base):
     __tablename__ = 'predicciones'
 
     id_prediccion = Column(Integer, primary_key=True, autoincrement=True)
@@ -81,24 +81,20 @@ class Categoria(Base):
     gasto_futuro = Column(Double, nullable=False)
 
     # Referencias al gasto mensual
-    user_name = Column(String(250), ForeignKey('gastos_mensual.user_name'), nullable=False)
-    id_gasto = Column(Integer, ForeignKey('gastos_mensual.id_gasto'), nullable=False)
-    gasto_mensual = relationship('GastoMensual', back_populates='predicciones',
-                                foreign_keys=[user_name, id_gasto])
+    id_gasM = Column(Integer, ForeignKey('gastos_mensual.id_gasM'), nullable=False)
+    gasto_mensual = relationship('GastoMensual', back_populates='predicciones',)
+
 class GastoMensual(Base):
     __tablename__ = 'gastos_mensual'
     # Llave compuesta que relaciona GastoMensual con Usuario y Gasto
-    user_name = Column(String(250), ForeignKey('usuarios.user_name'), primary_key=True)
-    id_gasto = Column(Integer, ForeignKey('gastos.id_gasto'), primary_key=True)
+    id_gasM =  Column(Integer, primary_key=True, autoincrement=True)
+    user_name = Column(String(250), ForeignKey('usuarios.user_name'),nullable=False)
+    id_gasto = Column(Integer, ForeignKey('gastos.id_gasto'),nullable=False)
     # Relaciones
     usuario = relationship("Usuario", back_populates="gastos")
-    gasto = relationship('Gasto', backref='gasto_mensual')
+    gasto = relationship('Gasto', backref='gasto_mensuales')
     # Relación con Prediccion
-    predicciones = relationship(
-        'Prediccion',
-        back_populates='gasto_mensual',
-        primaryjoin=(user_name == Prediccion.user_name) & (id_gasto == Prediccion.id_gasto)
-    )"""
+    predicciones = relationship('Prediccion', back_populates='gasto_mensual',)
 
 
 Base.metadata.create_all(bind=engine)
