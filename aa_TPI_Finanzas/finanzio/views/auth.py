@@ -6,12 +6,12 @@ from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identi
 
 
 auth_bp = Blueprint('auth', __name__)
+
 @auth_bp.route('/login')
 def login():
     return render_template('login.html', show_login_button=False)
 
 @auth_bp.route('/loginuser', methods=['POST'])
-
 def loginuser():
     user_name = request.form['username']
     contraseña = request.form['contraseña']
@@ -19,11 +19,14 @@ def loginuser():
         usuario = session.query(Usuario).filter(Usuario.user_name == user_name).first()
 
     if usuario and bcrypt.check_password_hash(usuario.contraseña, contraseña):
-        
-        access_token=create_access_token(identity=user_name)
         response=make_response(redirect(url_for('main.home')))
-        set_access_cookies(response,access_token)
-
+        response.set_cookie(
+           key='usuario',
+           value=user_name,
+           httponly=True,
+           secure=True,
+           samesite='Lax'
+        )
         return response
     else:
         flash('Usuario o contraseña incorrecta')

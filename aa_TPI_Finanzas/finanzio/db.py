@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Double, ForeignKey, Integer, String, Date, column, create_engine
 from sqlalchemy.orm import relationship, sessionmaker, declarative_base
 
-DATABASE_URL = "mysql+pymysql://root:root@localhost:3306/finanzio_db"
+DATABASE_URL = "mysql+pymysql://root:admin@localhost:3306/finanzio_db"
 engine = create_engine(DATABASE_URL)
 
 Base = declarative_base()
@@ -29,7 +29,7 @@ class Usuario(Base):
 
     # Un usuario puede tener 0 o muchos ingresos y gastos
     ingresos = relationship("Ingreso", back_populates="usuario")
-#    gastos_mensuales = relationship('GastoMensual', back_populates='usuario')
+    gastos_mensuales = relationship('GastoMensual', back_populates='usuario')
     gastos = relationship('Gasto', back_populates='usuario')  # Relación corregida aquí
 
 
@@ -91,7 +91,7 @@ class GastoMensual(Base):
     user_name = Column(String(250), ForeignKey('usuarios.user_name'),nullable=False)
     id_gasto = Column(Integer, ForeignKey('gastos.id_gasto'),nullable=False)
     # Relaciones
-    usuario = relationship("Usuario", back_populates="gastos")
+    usuario = relationship("Usuario", back_populates="gastos_mensuales")
     gasto = relationship('Gasto', backref='gasto_mensuales')
     # Relación con Prediccion
     predicciones = relationship('Prediccion', back_populates='gasto_mensual',)

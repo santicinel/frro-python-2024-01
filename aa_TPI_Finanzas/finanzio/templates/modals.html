@@ -20,6 +20,7 @@
       <div class="modal-body">
         <form method="POST" action="/ingreso">
           <div class="mb-3">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <label for="ingresoMonto" class="form-label">Monto</label>
             <input
               type="number"
