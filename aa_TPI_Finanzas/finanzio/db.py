@@ -1,8 +1,11 @@
 from sqlalchemy import Column, Double, ForeignKey, Integer, String, Date, column, create_engine
 from sqlalchemy.orm import relationship, sessionmaker, declarative_base
+import os
+from dotenv import load_dotenv
 
-DATABASE_URL = "mysql+pymysql://root:admin@localhost:3306/finanzio_db"
-engine = create_engine(DATABASE_URL)
+load_dotenv()
+
+engine = create_engine(os.getenv('DATABASE_URL'))
 
 Base = declarative_base()
 

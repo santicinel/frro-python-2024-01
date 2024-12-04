@@ -20,34 +20,133 @@ block content %}
   </div>
 </div>
 <!-- Contenido principal -->
+
 <div class="container mt-5">
-  <h3>Ultimos ingresos del mes</h3>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Fecha</th>
-        <th>Monto</th>
-        <th>Descripción</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for ingreso in ingresos %}
-      <tr>
-        <td>{{ ingreso.fecha_ingreso.strftime('%d/%m/%Y') }}</td>
-        <td>{{ ingreso.monto }}</td>
-        <td>{{ ingreso.descripcion }}</td>
-      </tr>
-      {% else %}
-      <tr>
-        <td colspan="3" class="text-center">
-          No hay ingresos registrados para este mes.
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <nav aria-label="Page navigation">{{ pagination.links }}</nav>
+  <div class="card">
+    <div class="card-header">
+      <!-- Nav tabs -->
+      <ul
+        class="nav nav-tabs card-header-tabs justify-content-center"
+        id="myTab"
+        role="tablist"
+      >
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link active"
+            id="ingresos-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#ingresos"
+            type="button"
+            role="tab"
+            aria-controls="ingresos"
+            aria-selected="true"
+          >
+            Ingresos
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button
+            class="nav-link"
+            id="gastos-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#gastos"
+            type="button"
+            role="tab"
+            aria-controls="gastos"
+            aria-selected="false"
+          >
+            Gastos
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <!-- Tab content -->
+      <div class="tab-content mt-3" id="myTabContent">
+        <!-- Contenido de Ingresos -->
+        <div
+          class="tab-pane fade show active"
+          id="ingresos"
+          role="tabpanel"
+          aria-labelledby="ingresos-tab"
+        >
+          <h4>Últimos ingresos del mes</h4>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Monto</th>
+                <th>Descripción</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for ingreso in ingresos %}
+              <tr>
+                <td>{{ ingreso.fecha_ingreso.strftime('%d/%m/%Y') }}</td>
+                <td>${{ ingreso.monto }}</td>
+                <td>{{ ingreso.descripcion }}</td>
+              </tr>
+              {% else %}
+              <tr>
+                <td colspan="3" class="text-center">
+                  No hay ingresos registrados para este mes.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <p>Total de ingresos en el último mes: ${{ total_ingresos }}</p>
+        </div>
+
+        <!-- Contenido de Gastos -->
+        <div
+          class="tab-pane fade"
+          id="gastos"
+          role="tabpanel"
+          aria-labelledby="gastos-tab"
+        >
+          <h4>Últimos gastos del mes</h4>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Fecha</th>
+                <th>Monto</th>
+                <th>Descripción</th>
+                <th>Categoría</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for gasto in gastos %}
+              <tr>
+                <td>{{ gasto.fecha_gasto.strftime('%d/%m/%Y') }}</td>
+                <td>${{ gasto.monto }}</td>
+                <td>{{ gasto.descripcion }}</td>
+                <td>{{ gasto.categoria.descripcion }}</td>
+              </tr>
+              {% else %}
+              <tr>
+                <td colspan="4" class="text-center">
+                  No hay gastos registrados para este mes.
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <p>Total de gastos en el último mes: ${{calculo_total_gastos }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
-<!-- Puedes agregar aquí gráficos, reportes, etc. -->
+
+<div class="container mt-3">
+  <div class="card">
+    <div class="card-header">
+      <h4 class="">
+        Saldo restante en el mes: ${{total_ingresos - calculo_total_gastos }}
+      </h4>
+    </div>
+  </div>
+</div>
 
 {% include "modals.html" %} {% endblock %}

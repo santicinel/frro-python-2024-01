@@ -72,23 +72,52 @@
         ></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form method="POST" action="/ingresogasto">
           <div class="mb-3">
+             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
             <label for="gastoMonto" class="form-label">Monto</label>
             <input
               type="number"
               class="form-control"
               id="gastoMonto"
-              placeholder="Ingrese el monto"
+              placeholder="Ingrese su gasto"
+              name="gasto"
             />
+            <label for="ingresoDescripcion" class="form-label mt-3"
+              >Descripcion</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="ingresoDescripcion"
+              placeholder="Descripcion"
+              name="descripcion"
+            />
+            <label for="ingresoTipo" class="form-label mt-3"
+              >Tipo</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="ingresoDescripcion"
+              placeholder="Descripcion"
+              name="tipo"
+            />
+            <select class=  "form-select mt-3" aria-label="Seleccionar una categoría" name="id_categoria">
+              <option selected disabled>Selecciona una categoría</option>
+               {% for categoria in categorias %}
+               <option   value="{{ categoria.id_categoria }}">{{ categoria.descripcion }}</option>
+                {% endfor %}
+            </select>
           </div>
-        </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Cerrar
         </button>
-        <button type="button" class="btn btn-danger">Guardar</button>
+        <button type="submit" class="btn btn-danger">Guardar</button>
+        </form>
+
       </div>
     </div>
   </div>

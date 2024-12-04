@@ -1,10 +1,12 @@
 from flask import Flask, jsonify, request, abort
 from flask_sqlalchemy import SQLAlchemy
-from db import DATABASE_URL
 import os
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from flask_wtf.csrf import CSRFProtect
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Inicializaciones
 db = SQLAlchemy()
@@ -15,7 +17,7 @@ csrf = CSRFProtect()
 # Función principal
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     # Configuraciones comentadas (descomentar si son necesarias)
     app.secret_key = os.getenv("SECRET_KEY")
