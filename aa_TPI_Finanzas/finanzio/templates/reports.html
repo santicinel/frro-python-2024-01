@@ -1,2 +1,20 @@
-{% extends "base.html" %} {% block title %}Home - Finanzio{% endblock %} {%
-block content %}
+{% extends "base.html" %} {% block title %} Reportes - Finanzio {% endblock %}
+{% block content %}
+<h2 class="text-center mt-3 mb-4">Reportes</h2>
+
+<div class="container-fluid">
+  <div class="row justify-content-center">
+    <!-- Primer gráfico: Gastos por categoría -->
+    <div class="col-md-6 mb-4">
+      <h3 class="text-center">Ingresos vs Gastos</h3>
+      <div class="text-center">{{ graph_html | safe }}</div>
+    </div>
+
+    <!-- Segundo gráfico: Otro gráfico -->
+    <div class="col-md-6 mb-4">
+      <h3 class="text-center">Gastos por categoría</h3>
+      <div class="text-center">{{ graph_html2 | safe }}</div>
+    </div>
+  </div>
+</div>
+{% endblock %}
