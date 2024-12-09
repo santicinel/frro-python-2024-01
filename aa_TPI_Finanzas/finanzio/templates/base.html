@@ -9,6 +9,11 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+
     <title>{% block title %}Finanzio{% endblock %}</title>
     <link
       rel="stylesheet"
@@ -19,17 +24,25 @@
     <header class="navbar sticky-top flex-md-nowrap p-0 header-custom">
       <a
         class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-4 text-white"
-        href="#"
+        href="{{url_for('main.index')}}"
         >Finanzio</a
       >
-      {% if show_login_button %}
-      <form class="d-flex" action="{{url_for('auth.login')}}">
+      {% if "user_id" in session %}
+      <div class="d-flex align-items-center">
+        <span class="text-white me-3">Hola, {{ session['user_name'] }}</span>
+        <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-danger"
+          >Cerrar Sesión</a
+        >
+      </div>
+      {% else %}
+      <form class="d-flex" action="{{ url_for('auth.login') }}">
         <button class="btn btn-outline-success" type="submit">
           Iniciar Sesión
         </button>
       </form>
       {% endif %}
     </header>
+
     {% if show_canvas %}
     <div class="container-fluid">
       <div class="row">
@@ -62,7 +75,11 @@
                 >
               </li>
               <li class="nav-item">
-                <a class="nav-link offcanvas-item" href="#">Cerrar Sesión</a>
+                <a
+                  class="nav-link offcanvas-item"
+                  href="{{url_for('auth.logout')}}"
+                  >Cerrar Sesión</a
+                >
               </li>
             </ul>
           </div>

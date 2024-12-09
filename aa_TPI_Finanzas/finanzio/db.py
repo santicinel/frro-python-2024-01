@@ -32,7 +32,6 @@ class Usuario(Base):
 
     # Un usuario puede tener 0 o muchos ingresos y gastos
     ingresos = relationship("Ingreso", back_populates="usuario")
-    gastos_mensuales = relationship('GastoMensual', back_populates='usuario')
     gastos = relationship('Gasto', back_populates='usuario')  # Relación corregida aquí
 
 
@@ -84,20 +83,6 @@ class Prediccion(Base):
     gasto_futuro = Column(Double, nullable=False)
 
     # Referencias al gasto mensual
-    id_gasM = Column(Integer, ForeignKey('gastos_mensual.id_gasM'), nullable=False)
-    gasto_mensual = relationship('GastoMensual', back_populates='predicciones',)
-
-class GastoMensual(Base):
-    __tablename__ = 'gastos_mensual'
-    # Llave compuesta que relaciona GastoMensual con Usuario y Gasto
-    id_gasM =  Column(Integer, primary_key=True, autoincrement=True)
-    user_name = Column(String(250), ForeignKey('usuarios.user_name'),nullable=False)
-    id_gasto = Column(Integer, ForeignKey('gastos.id_gasto'),nullable=False)
-    # Relaciones
-    usuario = relationship("Usuario", back_populates="gastos_mensuales")
-    gasto = relationship('Gasto', backref='gasto_mensuales')
-    # Relación con Prediccion
-    predicciones = relationship('Prediccion', back_populates='gasto_mensual',)
 
 
 Base.metadata.create_all(bind=engine)

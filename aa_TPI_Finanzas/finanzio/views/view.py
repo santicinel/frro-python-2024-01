@@ -16,7 +16,7 @@ def get_categorias():
 
 @bp.route('/')
 def index():
-  return render_template('index.html',show_login_button=True,show_canvas=False)
+  return render_template('index.html',show_canvas=False)
 
 @bp.route('/home',methods=['GET'])
 def home():
@@ -58,7 +58,6 @@ def home():
     pagination=Pagination(page=page,total=total,per_page=per_page,record_name='ingresos',css_framework='bootstrap5')
 
     return render_template('home.html',
-                           show_login_button=False, 
                            show_canvas=True,ingresos=ingresos,
                            pagination=pagination,
                            categorias=categorias,

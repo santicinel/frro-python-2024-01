@@ -109,19 +109,51 @@ block content %}
           <table class="table table-striped">
             <thead>
               <tr>
+                <th>#</th>
                 <th>Fecha</th>
                 <th>Monto</th>
                 <th>Descripción</th>
                 <th>Categoría</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
               </tr>
             </thead>
             <tbody>
               {% for gasto in gastos %}
               <tr>
+                <td>{{gasto.id_gasto}}</td>
                 <td>{{ gasto.fecha_gasto.strftime('%d/%m/%Y') }}</td>
                 <td>${{ gasto.monto }}</td>
                 <td>{{ gasto.descripcion }}</td>
                 <td>{{ gasto.categoria.descripcion }}</td>
+                <td>
+                  <a
+                    href="{{ url_for('user.editar_gasto', id=gasto.id_gasto) }}"
+                    class="btn btn-sm btn-primary"
+                  >
+                    <i class="bi bi-pencil"></i>
+                  </a>
+                </td>
+                <td>
+                  <form
+                    method="POST"
+                    action="{{ url_for('user.eliminar_gasto', id_gasto=gasto.id_gasto) }}"
+                    style="display: inline"
+                  >
+                    <input
+                      type="hidden"
+                      name="csrf_token"
+                      value="{{ csrf_token() }}"
+                    />
+                    <button
+                      type="submit"
+                      class="btn btn-danger btn-sm"
+                      onclick="return confirm('¿Estás seguro de que deseas eliminar este gasto?');"
+                    >
+                      Eliminar
+                    </button>
+                  </form>
+                </td>
               </tr>
               {% else %}
               <tr>

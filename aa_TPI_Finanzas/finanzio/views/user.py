@@ -5,6 +5,8 @@ from datetime import datetime
 from controllers.reports_data import get_ingresos_gastos_por_mes,obtener_gastos_por_categoria
 import plotly.graph_objects as go
 from controllers.prediccion import obtener_prediccion_gastos
+from db import obtener_sesion
+from sqlalchemy.orm import Session
 
 user_bp=Blueprint('user',__name__)
 
@@ -12,8 +14,6 @@ user_bp=Blueprint('user',__name__)
 #@jwt_required()
 def ingreso_dinero():
     if request.method== 'POST':
-            #csrf_token_form=request.form.get('csrf_token')
-            #csrf_token_cookie=request.cookies.get('csrf_access_token')
         user_name=request.cookies.get('usuario')
         monto=request.form['monto']
         descripcion=request.form['descripcion']
@@ -184,3 +184,40 @@ def prediccion():
     graph_html = fig.to_html(full_html=False)
 
     return render_template('prediccion.html', graph_html=graph_html,show_canvas=True)
+
+
+@user_bp.route('/editargasto/<int:id>',methods=['GET','POST'])
+def editar_gasto(id):
+    gasto = db.session.query(Gasto).filter_by(id_gasto=id).first()
+    categorias = db.session.query(Categoria).all()
+    if not gasto:
+        flash("No se encontró el gasto.", "error")
+        return redirect(url_for('main.home'))
+    
+    if request.method == 'POST':
+        # Recibir y actualizar los datos del gasto
+        gasto.monto = request.form['monto']
+        gasto.descripcion = request.form['descripcion']
+        gasto.id_categoria = request.form['id_categoria']
+        
+        try:
+            db.session.commit()
+            flash("Gasto editado correctamente.", "success")
+            return redirect(url_for('user.home'))
+        except Exception as e:
+            db.session.rollback()
+            flash(f"Error al editar el gasto: {e}", "error")
+
+    return render_template('home.html',show_canvas=True,show_login_button=False,gasto=gasto,categorias=categorias)
+
+
+@user_bp.route('/eliminar_gasto/<int:id_gasto>', methods=['POST'])
+def eliminar_gasto(id_gasto):
+    session: Session = next(obtener_sesion())  # Obtén la sesión
+    gasto = session.query(Gasto).filter(Gasto.id_gasto == id_gasto).first()
+    if gasto:
+        session.delete(gasto)
+        session.commit()
+        return redirect(url_for('main.home'))
+    else:
+        return "El gasto no existe", 404
