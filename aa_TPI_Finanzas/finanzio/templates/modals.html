@@ -93,16 +93,20 @@
               placeholder="Descripcion"
               name="descripcion"
             />
-            <label for="ingresoTipo" class="form-label mt-3"
-              >Tipo</label
+             <label for="gastoTipoGasto" class="form-label mt-3"
+              >Tipo de gasto</label
             >
-            <input
-              type="text"
-              class="form-control"
-              id="ingresoDescripcion"
-              placeholder="Descripcion"
-              name="tipo"
-            />
+
+           <select class=  "form-select mt-3" aria-label="Seleccione el tipo de gasto" name="tipo">
+              <option selected disabled>Seleccione el tipo de gasto</option>
+           {% for tipo in tipos_gastos %}
+                <option value="{{ tipo }}">{{ tipo }}</option>
+            {% endfor %}
+
+            </select>
+            <label for="gastoCategoria" class="form-label mt-3">
+              Categoría
+            </label>
             <select class=  "form-select mt-3" aria-label="Seleccionar una categoría" name="id_categoria">
               <option selected disabled>Selecciona una categoría</option>
                {% for categoria in categorias %}

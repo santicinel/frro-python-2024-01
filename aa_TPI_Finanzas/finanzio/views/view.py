@@ -5,7 +5,7 @@ from datetime import datetime
 from sqlalchemy import extract,func
 from sqlalchemy.orm import joinedload
 from flask_paginate import Pagination, get_page_parameter
-
+from controllers.helpers import obtener_tipos_gasto
 
 bp=Blueprint('main',__name__)
 
@@ -20,6 +20,7 @@ def index():
 
 @bp.route('/home',methods=['GET'])
 def home():
+    tipos_gastos=obtener_tipos_gasto()
     user_name=request.cookies.get('usuario')
     if not user_name:
       flash(f'Por favor inica sesión','warning')
@@ -63,7 +64,8 @@ def home():
                            categorias=categorias,
                            gastos = gastos,
                           calculo_total_gastos=calculo_total_gastos,
-                          total_ingresos=total_ingresos
+                          total_ingresos=total_ingresos,
+                          tipos_gastos=tipos_gastos
                           )
 
 def total_gastos(gastos_query):

@@ -7,6 +7,9 @@ import plotly.graph_objects as go
 from controllers.prediccion import obtener_prediccion_gastos
 from db import obtener_sesion
 from sqlalchemy.orm import Session
+from controllers.helpers import obtener_tipos_gasto
+from views.view import total_gastos, calculo_total_ingresos,get_categorias
+from sqlalchemy import extract
 
 user_bp=Blueprint('user',__name__)
 
@@ -40,6 +43,7 @@ def ingreso_dinero():
 
 @user_bp.route('/ingresogasto',methods=['POST'])
 def ingreso_gasto():
+    tipos_gasto=obtener_tipos_gasto()
     if request.method== 'POST':         
         user_name=request.cookies.get('usuario')
         monto=request.form.get('gasto')
@@ -71,7 +75,7 @@ def ingreso_gasto():
             flash(f"Error al agregar el gasto:{str(e)}","error")
             return redirect(url_for('main.home'))
     
-    return redirect(url_for('main.home'))
+    return render_template('home.html',tipos_gasto=tipos_gasto)
 
 @user_bp.route('/reports', methods=['GET'])
 def reports():
@@ -195,20 +199,27 @@ def editar_gasto(id):
         return redirect(url_for('main.home'))
     
     if request.method == 'POST':
-        # Recibir y actualizar los datos del gasto
-        gasto.monto = request.form['monto']
-        gasto.descripcion = request.form['descripcion']
-        gasto.id_categoria = request.form['id_categoria']
-        
-        try:
-            db.session.commit()
-            flash("Gasto editado correctamente.", "success")
-            return redirect(url_for('user.home'))
-        except Exception as e:
-            db.session.rollback()
-            flash(f"Error al editar el gasto: {e}", "error")
+        # Actualizar los datos del gasto
+        gasto.monto = request.form.get('monto')
+        gasto.descripcion = request.form.get('descripcion')
 
-    return render_template('home.html',show_canvas=True,show_login_button=False,gasto=gasto,categorias=categorias)
+        id_categoria = request.form.get('id_categoria')
+        categoria_seleccionada=db.session.query(Categoria).filter_by(id_categoria=id_categoria).first()
+        
+        if categoria_seleccionada:
+            gasto.categoria=categoria_seleccionada
+
+        db.session.commit()
+        flash("El gasto se ha actualizado correctamente", "success")
+        return redirect(url_for('main.home'))
+
+    tipos_gastos = obtener_tipos_gasto()
+    return render_template('editargasto.html',
+                           show_canvas=True,
+                           show_login_button=False,
+                           gasto=gasto,
+                           categorias=categorias,
+                           tipos_gastos=tipos_gastos,)
 
 
 @user_bp.route('/eliminar_gasto/<int:id_gasto>', methods=['POST'])

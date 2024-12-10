@@ -17,7 +17,14 @@
                     <label for="descripcion" class="form-label">Descripción</label>
                     <textarea id="descripcion" name="descripcion" class="form-control form-control-sm" rows="3" required>{{ gasto.descripcion }}</textarea>
                 </div>
+                <div class="mb-3"> 
+            <select class=  "form-select mt-3" aria-label="Seleccione el tipo de gasto" name="tipo">
+              <option selected disabled>Seleccione el tipo de gasto</option>
+           {% for tipo in tipos_gastos %}
+                <option value="{{ tipo }}">{{ tipo }}</option>
+            {% endfor %}
 
+            </select></div>
                 <div class="mb-3">
                     <label for="id_categoria" class="form-label">Categoría</label>
                     <select class="form-select form-select-sm" id="id_categoria" name="id_categoria" required>
@@ -35,4 +42,5 @@
         </div>
     </div>
 </div>
+{% include "alerts.html" %}
 {% endblock %}

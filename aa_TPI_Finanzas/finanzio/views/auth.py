@@ -13,6 +13,10 @@ def login():
 def loginuser():
     user_name = request.form['username']
     contraseña = request.form['contraseña']
+
+    if not user_name or not contraseña:
+       flash("Debes completar todos los campos","danger")
+       return redirect(url_for('auth.login'))
     with next(obtener_sesion()) as sessionMake:
         usuario = sessionMake.query(Usuario).filter(Usuario.user_name == user_name).first()
 
@@ -29,7 +33,7 @@ def loginuser():
         )
         return response
     else:
-        flash('Usuario o contraseña incorrecta')
+        flash("Usuario o contraseña incorrecta","warning")
         return redirect(url_for('auth.login'))
     
 
