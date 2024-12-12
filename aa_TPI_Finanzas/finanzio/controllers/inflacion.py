@@ -2,7 +2,7 @@ import requests
 from datetime import datetime
 
 # Función para obtener la inflación mensual a partir de la API del BCRA
-def obtener_inflacion_mensual():
+def obtener_inflacion_mensual(meses):
     id_variable = "29"  # Reemplaza con el ID de la variable de inflación REM
     current_date = datetime.now()
     start_date = current_date.replace(year=current_date.year - 1).strftime('%Y-%m-%d')  # Fecha desde hace un año
@@ -22,7 +22,9 @@ def obtener_inflacion_mensual():
             inflacion_rem = results[0].get('valor', None)
             if inflacion_rem is not None:
                 inflacion_mensual = (pow(1 + inflacion_rem / 100, 1 / 12) - 1) * 100
-                return inflacion_mensual
+                inflacion_total = pow(1 + inflacion_mensual, meses) - 1
+                print(f'Inflacion mensual {inflacion_total}')
+                return inflacion_total
             else:
                 print("No se encontró el valor de inflación en el resultado.")
                 return 0

@@ -4,5 +4,6 @@
   {"descripcion": "Entretenimiento", "prioridad": 2},
   {"descripcion": "Salud", "prioridad": 4},
   {"descripcion": "Educación", "prioridad": 4},
-  {"descripcion":"Alquiler","prioridad":5}
+  {"descripcion":"Alquiler","prioridad":5},
+  {"descripcion":"Electrodoméstico","prioridad":3}
 ]

@@ -1,6 +1,17 @@
 {% extends "base.html" %} {% block title %}Reportes - Finanzio{% endblock %} {%
 block content %}
 <h2>Predicciones</h2>
-<div class="container-fluid text-center">{{ graph_html | safe }}</div>
+<form method="GET" action="{{ url_for('user.prediccion') }}">
+  <label for="months">Selecciona el período de predicción:</label>
+  <select name="months" id="months" class="form-select mt-3">
+    <option value="1">1 mes</option>
+    <option value="2">2 meses</option>
+    <option value="3">3 meses</option>
+  </select>
+  <button type="submit" class="btn btn-success mt-3">
+    Calcular Predicción
+  </button>
+</form>
+<div class="container-fluid text-center mt-3">{{ graph_html | safe }}</div>
 
 {% endblock %}

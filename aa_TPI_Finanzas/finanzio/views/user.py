@@ -157,7 +157,9 @@ def reports():
 @user_bp.route('/prediccion',methods=['GET'])
 def prediccion():
     user_name=request.cookies.get('usuario')
-    predicciones=obtener_prediccion_gastos(user_name)
+    months = request.args.get('months', default=1, type=int)
+    predicciones=obtener_prediccion_gastos(user_name,months=months)
+    print(predicciones)
     categorias = [p['categoria'] for p in predicciones]
     gastos_actuales = [p['gasto_actual'] for p in predicciones]
     gastos_predichos = [p['gasto_predicho'] for p in predicciones]
@@ -187,7 +189,9 @@ def prediccion():
 
     graph_html = fig.to_html(full_html=False)
 
-    return render_template('prediccion.html', graph_html=graph_html,show_canvas=True)
+    return render_template('prediccion.html', graph_html=graph_html,
+                           show_canvas=True,
+                           months=months)
 
 
 @user_bp.route('/editargasto/<int:id>',methods=['GET','POST'])
@@ -211,7 +215,7 @@ def editar_gasto(id):
 
         db.session.commit()
         flash("El gasto se ha actualizado correctamente", "success")
-        return redirect(url_for('main.home'))
+        return redirect(url_for('user.editargasto'))
 
     tipos_gastos = obtener_tipos_gasto()
     return render_template('editargasto.html',

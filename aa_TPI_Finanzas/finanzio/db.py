@@ -3,6 +3,7 @@ from sqlalchemy.orm import relationship, sessionmaker, declarative_base
 import os
 from dotenv import load_dotenv
 
+
 load_dotenv()
 
 engine = create_engine(os.getenv('DATABASE_URL'))
@@ -81,8 +82,8 @@ class Prediccion(Base):
     id_prediccion = Column(Integer, primary_key=True, autoincrement=True)
     fecha_predecir = Column(Date, nullable=False)
     gasto_futuro = Column(Double, nullable=False)
+    id_gasto = Column(Integer, ForeignKey('gastos.id_gasto'), nullable=False)  # Relación con Usuario
 
-    # Referencias al gasto mensual
-
-
+    #gasto=relationship("Gasto")
 Base.metadata.create_all(bind=engine)
+

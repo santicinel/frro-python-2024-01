@@ -1,73 +1,156 @@
-{% extends "base.html"%} {% block title %}Register - Finanzio{% endblock %} {%
+{% extends "base.html" %} {% block title %}Register - Finanzio{% endblock %} {%
 block content %}
 
 <div class="container mt-5">
-        <!-- Mensajes flash -->
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div class="alert alert-warning">
-                    {% for message in messages %}
-                        <p>{{ message }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-<div class="d-flex flex-column align-items-center align-bottom mt-5">
-  <form method="POST" action="/newuser" class="card w-50 p-4 shadow-lg">
-    <div class="mb-2">
-      <label for="exampleInputEmail1" class="form-label">Usuario</label>
-      <input
-        type="text" name="username"
-        class="form-control"
-      />
-    <div class="mb-2">
-      <label for="exampleInputPassword1" class="form-label">Nombre</label>
-      <input type="text" class="form-control" name="nombre" />
-    </div>
-    <div class="mb-2">
-      <label for="exampleInputEmail1" class="form-label">Apellido</label>
-      <input
-        type="text"
-        class="form-control" name="apellido"
-      />
-    </div>
-    <div class="mb-2">
-      <label for="exampleInputEmail1" class="form-label">DNI</label>
-      <input
-        type="text"
-        class="form-control" name="dni"
-      />
-      <div id="emailHelp" class="form-text"></div>
-    </div>
-    <div class="mb-2">
-      <label  class="form-label">Email</label>
-      <input
-        type="email"
-        class="form-control"
-        name="email"
-      />
-    </div>
-    <div class="mb-2">
-      <label  class="form-label">Contraseña</label>
-      <input
-        type="password"
-        class="form-control"
-        name="contraseña"
-      />
-    </div>
-    <div class="mb-2">
-      <label  class="form-label"
-        >Fecha de Nacimiento</label
+  <!-- Mensajes flash -->
+
+  {% with messages = get_flashed_messages() %} {% if messages %}
+
+  <div class="alert alert-warning">
+    {% for message in messages %}
+
+    <p>{{ message }}</p>
+
+    {% endfor %}
+  </div>
+
+  {% endif %} {% endwith %}
+
+  <div class="d-flex flex-column align-items-center mt-5">
+    <form
+      method="POST"
+      action="{{ url_for('auth.new_user') }}"
+      class="card w-75 p-4 shadow-lg"
+    >
+      {{ form.hidden_tag() }}
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          {{ form.username.label(class="form-label") }} {{
+          form.username(class="form-control" + (' is-invalid' if
+          form.username.errors else '')) }} {% for error in form.username.errors
+          %}
+
+          <div class="invalid-feedback">{{ error }}</div>
+
+          {% endfor %}
+        </div>
+
+        <div class="col-md-6">
+          {{ form.dni.label(class="form-label") }} {{
+          form.dni(class="form-control" + (' is-invalid' if form.dni.errors else
+          '')) }} {% for error in form.dni.errors %}
+
+          <div class="invalid-feedback">{{ error }}</div>
+
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          {{ form.nombre.label(class="form-label") }} {{
+          form.nombre(class="form-control" + (' is-invalid' if
+          form.nombre.errors else '')) }} {% for error in form.nombre.errors %}
+
+          <div class="invalid-feedback">{{ error }}</div>
+
+          {% endfor %}
+        </div>
+
+        <div class="col-md-6">
+          {{ form.apellido.label(class="form-label") }} {{
+          form.apellido(class="form-control" + (' is-invalid' if
+          form.apellido.errors else '')) }} {% for error in form.apellido.errors
+          %}
+
+          <div class="invalid-feedback">{{ error }}</div>
+
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          {{ form.email.label(class="form-label") }} {{
+          form.email(class="form-control" + (' is-invalid' if form.email.errors
+          else '')) }} {% for error in form.email.errors %}
+
+          <div class="invalid-feedback">{{ error }}</div>
+
+          {% endfor %}
+        </div>
+
+        <div class="col-md-6">
+          {{ form.password.label(class="form-label") }} {{
+          form.password(class="form-control" + (' is-invalid' if
+          form.password.errors else '')) }} {% for error in form.password.errors
+          %}
+
+          <div class="invalid-feedback">{{ error }}</div>
+
+          {% endfor %}
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          {{ form.confirm_password.label(class="form-label") }} {{
+          form.confirm_password(class="form-control" + (' is-invalid' if
+          form.confirm_password.errors else '')) }} {% for error in
+          form.confirm_password.errors %}
+
+          <div class="invalid-feedback">{{ error }}</div>
+
+          {% endfor %}
+        </div>
+
+        <div class="col-md-6">
+          {{ form.fecha_nacimiento.label(class="form-label") }} {{
+          form.fecha_nacimiento(class="form-control" + (' is-invalid' if
+          form.fecha_nacimiento.errors else '')) }} {% for error in
+          form.fecha_nacimiento.errors %}
+
+          <div class="invalid-feedback">{{ error }}</div>
+
+          {% endfor %}
+        </div>
+      </div>
+
+      <button class="btn btn-success">Registrar usuario</button>
+
+      <a href="{{ url_for('main.index') }}" class="btn btn-outline-success mt-3"
+        >Volver</a
       >
-      <input
-        type="text"
-        class="form-control"
-       name="fecha_nacimiento"
-      />
-      <div id="emailHelp" class="form-text"></div>
-    </div>
-    <button  class="btn btn-success">Registrar usuario</button>
-  </form>
+    </form>
+  </div>
+
+  <script>
+    // Función para validar campos vacíos
+
+    function validateField(field) {
+      if (field.value.trim() === '') {
+        field.classList.add('is-invalid');
+      } else {
+        field.classList.remove('is-invalid');
+      }
+    }
+
+    // Obtener todos los campos de entrada
+
+    const fields = document.querySelectorAll('.form-control');
+
+    // Agregar evento 'blur' a cada campo
+
+    fields.forEach((field) => {
+      field.addEventListener('blur', () => validateField(field));
+    });
+
+    // Inicializar flatpickr
+    flatpickr('#fecha_nacimiento', {
+      dateFormat: 'Y-m-d',
+      maxDate: 'today',
+    });
+  </script>
 </div>
-{% include "alerts.html" %}
 {% endblock %}

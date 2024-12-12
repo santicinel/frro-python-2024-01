@@ -24,3 +24,16 @@ h1 {
   margin: 5px 0;
   /* Espaciado entre los items */
 }
+
+.input-group.date {
+  cursor: pointer;
+}
+
+.input-group.date:before {
+  content: "\f133";
+  font-family: FontAwesome;
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}

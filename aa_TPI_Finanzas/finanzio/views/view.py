@@ -24,7 +24,7 @@ def home():
     user_name=request.cookies.get('usuario')
     if not user_name:
       flash(f'Por favor inica sesión','warning')
-      return redirect(url_for('index.html'))
+      return redirect(url_for('main.home'))
     
     mes_actual=datetime.now().month
     anio_actual=datetime.now().year
