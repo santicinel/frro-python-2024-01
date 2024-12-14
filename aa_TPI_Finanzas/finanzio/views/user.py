@@ -8,9 +8,7 @@ from controllers.prediccion import obtener_prediccion_gastos
 from db import obtener_sesion
 from sqlalchemy.orm import Session
 from controllers.helpers import obtener_tipos_gasto
-from views.view import total_gastos, calculo_total_ingresos,get_categorias
-from sqlalchemy import extract
-
+from controllers.compare import comparar_gastos
 user_bp=Blueprint('user',__name__)
 
 @user_bp.route('/ingreso',methods=['POST'])
@@ -148,11 +146,21 @@ def reports():
     # Convertir el gráfico de torta a HTML
     graph_html2 = fig2.to_html(full_html=False)
 
-    return render_template('reports.html',
+    try:
+        resultados = comparar_gastos(user_name)
+        print(resultados)
+        if not resultados:
+            flash("No se encontraron datos para comparar sus gastos","info")
+        return render_template('reports.html',
                            show_login_button=False,
                            show_canvas=True,
                            graph_html=graph_html,
-                           graph_html2=graph_html2)
+                           graph_html2=graph_html2,
+                           resultados=resultados)
+    except Exception as e:
+        print("Error capt",e)
+        flash(str(e),"danger")
+        return redirect(url_for('main.home'))
 
 @user_bp.route('/prediccion',methods=['GET'])
 def prediccion():
@@ -236,3 +244,4 @@ def eliminar_gasto(id_gasto):
         return redirect(url_for('main.home'))
     else:
         return "El gasto no existe", 404
+    

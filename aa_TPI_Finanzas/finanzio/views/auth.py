@@ -81,7 +81,7 @@ def new_user():
 
         except Exception as e:
             db.session.rollback()
-            flash(f'Error al registrar el usuario: {str(e)}', 'danger')
+            flash(f'Error al registrar el usuario', 'danger')
 
     return render_template('register.html', form=form)
 

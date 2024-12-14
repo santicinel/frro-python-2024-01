@@ -4,17 +4,63 @@
 
 <div class="container-fluid">
   <div class="row justify-content-center">
-    <!-- Primer gráfico: Gastos por categoría -->
+    <!-- Primer gráfico: Ingresos vs Gastos -->
     <div class="col-md-6 mb-4">
       <h3 class="text-center">Ingresos vs Gastos</h3>
       <div class="text-center">{{ graph_html | safe }}</div>
     </div>
 
-    <!-- Segundo gráfico: Otro gráfico -->
+    <!-- Segundo gráfico: Gastos por categoría -->
     <div class="col-md-6 mb-4">
       <h3 class="text-center">Gastos por categoría</h3>
+      <p class="text-center">
+        Distribución por categoria de los gastos en los ultimos 6 meses
+      </p>
       <div class="text-center">{{ graph_html2 | safe }}</div>
     </div>
   </div>
+</div>
+
+<!-- Tabla Comparativa -->
+<div class="container">
+  <h2 class="text-center mb-4">Comparación de gastos</h2>
+  <p class="text-center">
+    En la siguiente tabla se muestra si sus gastos se encuentran por encima o
+    por debajo del promedio de todos los usuarios con ingresos similares al suyo
+  </p>
+  {% if resultados %}
+  <div class="table-responsive">
+    <table
+      class="table table-striped table-bordered table-hover text-center align-middle"
+    >
+      <thead class="table-dark">
+        <tr>
+          <th>Categoría</th>
+          <th>Gastos</th>
+          <th>Promedio con otros Usuarios</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for resultado in resultados %}
+        <tr>
+          <td>{{ resultado['categoria'] }}</td>
+          <td>${{ resultado['gasto_usuario'] }}</td>
+          <td>${{ resultado['promedio_categoria'] }}</td>
+          <td>
+            {% if resultado['estado'] == 'por encima' %}
+            <span class="badge bg-danger">{{ resultado['estado'] }}</span>
+            {% else %}
+            <span class="badge bg-success">{{ resultado['estado'] }}</span>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <p class="text-center text-muted">No hay resultados para mostrar.</p>
+  {% endif %}
 </div>
 {% endblock %}

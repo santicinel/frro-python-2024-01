@@ -3,15 +3,23 @@ block content %}
 <h2>Predicciones</h2>
 <form method="GET" action="{{ url_for('user.prediccion') }}">
   <label for="months">Selecciona el período de predicción:</label>
-  <select name="months" id="months" class="form-select mt-3">
+  <select name="months" id="months" class="form-select mt-3 w-25">
     <option value="1">1 mes</option>
     <option value="2">2 meses</option>
     <option value="3">3 meses</option>
   </select>
-  <button type="submit" class="btn btn-success mt-3">
+  <button type="submit" class="btn btn-success mt-3 w-25">
     Calcular Predicción
   </button>
 </form>
-<div class="container-fluid text-center mt-3">{{ graph_html | safe }}</div>
+<div class="container-fluid text-center mt-3">
+  <p class="text-center">
+    Esta predicción es una aproximación de sus gastos para los proximos meses
+    dependiendo de la inflación REM para los proximos 12 meses estimada por el
+    BCRA.
+  </p>
+
+  {{ graph_html | safe }}
+</div>
 
 {% endblock %}

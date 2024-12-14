@@ -1,8 +1,14 @@
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #f4f4f9;
+  background-color: white !important;
   height: 100vh;
   margin: 0;
+}
+
+main {
+
+  background-color: white !important;
+
 }
 
 h1 {
@@ -36,4 +42,65 @@ h1 {
   top: 50%;
   right: 10px;
   transform: translateY(-50%);
+}
+.footer-custom {
+  background-color: #f8f9fa;
+  /* Fondo claro */
+  color: #6c757d;
+  /* Texto en gris */
+  border-top: 1px solid #dee2e6;
+  /* Línea superior */
+}
+
+.footer-custom a {
+  color: #000;
+  /* Color del enlace (negro por defecto) */
+  text-decoration: none;
+  /* Sin subrayado */
+}
+
+.footer-custom a:hover {
+  color: #007bff;
+  /* Cambia a azul al pasar el ratón */
+}
+
+.footer-custom i {
+  vertical-align: middle;
+  /* Alinea el ícono con el texto */
+}
+
+/* Centra solo si no hay sidebar activo */
+main.col-md-9:not(.with-sidebar),
+main.col-lg-10:not(.with-sidebar) {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  /* Centra horizontalmente */
+  align-items: center;
+  /* Centra verticalmente */
+  min-height: 100vh;
+  /* Ocupa la altura completa de la ventana */
+}
+
+/* Si hay sidebar activo, aseguramos diseño normal */
+main.col-md-9.with-sidebar,
+main.col-lg-10.with-sidebar {
+  margin-left: auto;
+  /* Margen automático para ajustar */
+  margin-right: auto;
+  /* Margen automático para ajustar */
+  display: block;
+  /* Volvemos al flujo normal */
+  min-height: auto;
+  /* Altura según el contenido */
+}
+
+/* Ocultar cualquier overlay oscuro si el sidebar no está activo */
+#sidebar.collapse:not(.show) {
+  display: none;
+}
+
+.btn-sm-custom {
+  width:150px
+  /* Tamaño de fuente más pequeño */
 }

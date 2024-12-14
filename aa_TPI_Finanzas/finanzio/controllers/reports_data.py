@@ -7,7 +7,6 @@ def get_ingresos_gastos_por_mes(user_name):
     from db import SessionLocal, Ingreso, Gasto
     session = SessionLocal()
 
-    # Agrupar ingresos por mes y año
     ingresos_por_mes = (
         session.query(
             func.extract('year', Ingreso.fecha_ingreso).label('año'),
@@ -20,7 +19,6 @@ def get_ingresos_gastos_por_mes(user_name):
         .all()
     )
 
-    # Agrupar gastos por mes y año
     gastos_por_mes = (
         session.query(
             func.extract('year', Gasto.fecha_gasto).label('año'),
@@ -39,14 +37,12 @@ def get_ingresos_gastos_por_mes(user_name):
 def obtener_gastos_por_categoria(user_name, months=12):
     session = SessionLocal()
     
-    # Calcular la fecha de inicio
     current_date = datetime.now()
     if months == 6:
         start_date = current_date - timedelta(days=180)
     else:
         start_date = datetime(current_date.year, 1, 1)
 
-    # Consulta de los gastos agrupados por categoría
     gastos = session.query(
         Gasto.id_categoria,
         func.sum(Gasto.monto).label('total_gastos')
@@ -55,10 +51,8 @@ def obtener_gastos_por_categoria(user_name, months=12):
         Gasto.fecha_gasto >= start_date
     ).group_by(Gasto.id_categoria).all()
 
-    # Obtener las categorías y mapearlas a un diccionario
     categorias = {categoria.id_categoria: categoria.descripcion for categoria in session.query(Categoria).all()}
 
-    # Formatear los gastos por categoría con la descripción de la categoría
     gastos_categoria = [
         {'categoria': categorias[gasto.id_categoria], 'total_gastos': gasto.total_gastos}
         for gasto in gastos

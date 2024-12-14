@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block title %}Register - Finanzio{% endblock %} {%
 block content %}
 
-<div class="container mt-5">
+<div class="container">
   <!-- Mensajes flash -->
 
   {% with messages = get_flashed_messages() %} {% if messages %}
@@ -25,6 +25,8 @@ block content %}
       {{ form.hidden_tag() }}
 
       <div class="row mb-3">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token()}}" />
+
         <div class="col-md-6">
           {{ form.username.label(class="form-label") }} {{
           form.username(class="form-control" + (' is-invalid' if
@@ -116,12 +118,15 @@ block content %}
           {% endfor %}
         </div>
       </div>
+      <div class="text-center">
+        <button class="btn btn-success w-50">Registrar usuario</button>
 
-      <button class="btn btn-success">Registrar usuario</button>
-
-      <a href="{{ url_for('main.index') }}" class="btn btn-outline-success mt-3"
-        >Volver</a
-      >
+        <a
+          href="{{ url_for('main.index') }}"
+          class="btn btn-outline-success mt-3 w-50"
+          >Volver</a
+        >
+      </div>
     </form>
   </div>
 
